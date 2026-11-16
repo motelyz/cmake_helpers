@@ -237,12 +237,25 @@ else()
     endif()
     if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandAdwaitaDecorationPlugin_init)
         list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandAdwaitaDecorationPlugin_init>)
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandBradientDecorationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QComposePlatformInputContextPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSvgIconPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGtk3ThemePlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QTlsBackendOpenSSLPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGlibNetworkInformationPlugin_init>
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandBradientDecorationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandBradientDecorationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QComposePlatformInputContextPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QComposePlatformInputContextPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QSvgIconPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSvgIconPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QGtk3ThemePlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGtk3ThemePlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QTlsBackendOpenSSLPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QTlsBackendOpenSSLPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QGlibNetworkInformationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGlibNetworkInformationPlugin_init>)
+    endif()
     )
     if (TARGET Qt::DBus)
         list(PREPEND qt_libs
@@ -253,10 +266,12 @@ else()
             lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}DBus
             lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}Core
         )
-        list(APPEND qt_libs_list
-            $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QIbusPlatformInputContextPlugin_init>
-            $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXdgDesktopPortalThemePlugin_init>
-        )
+        if (TARGET Qt${QT_VERSION_MAJOR}::QIbusPlatformInputContextPlugin_init)
+            list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QIbusPlatformInputContextPlugin_init>)
+        endif()
+        if (TARGET Qt${QT_VERSION_MAJOR}::QXdgDesktopPortalThemePlugin_init)
+            list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXdgDesktopPortalThemePlugin_init>)
+        endif()
     endif()
     if (TARGET Qt::WaylandCompositor)
         list(PREPEND qt_libs
@@ -264,10 +279,12 @@ else()
             lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}WaylandEglCompositorHwIntegration
             lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}WaylandCompositor
         )
-        list(APPEND qt_libs_list
-            $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferIntegrationPlugin_init>
-            $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::WaylandCompositor_resources_1>
-        )
+        if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferIntegrationPlugin_init)
+            list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferIntegrationPlugin_init>)
+        endif()
+        if (TARGET Qt${QT_VERSION_MAJOR}::WaylandCompositor_resources_1)
+            list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::WaylandCompositor_resources_1>)
+        endif()
     endif()
     foreach (lib ${qt_libs})
         list(APPEND qt_libs_list "${qt_loc}/${lib}${qt_lib_suffix}")
