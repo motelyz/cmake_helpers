@@ -127,11 +127,16 @@ if (TARGET Qt::QuickWidgets)
     )
 endif()
 
-set(qt_libs_list 
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWebpPlugin_init>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QJpegPlugin_init>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGifPlugin_init>
-)
+set(qt_libs_list )
+if (TARGET Qt${QT_VERSION_MAJOR}::QWebpPlugin_init)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWebpPlugin_init>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::QJpegPlugin_init)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QJpegPlugin_init>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::QGifPlugin_init)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGifPlugin_init>)
+endif()
 
 if (WIN32)
     target_include_directories(external_qt SYSTEM
@@ -146,12 +151,18 @@ if (WIN32)
         lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}EntryPoint
         plugins/platforms/${qt_lib_prefix}qwindows
     )
-    list(APPEND qt_libs_list
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSchannelBackendPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QNLMNIPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_resources_1>
-    )
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QSchannelBackendPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSchannelBackendPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QNLMNIPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QNLMNIPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_resources_1)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin_resources_1>)
+    endif()
     foreach (lib ${qt_libs})
         list(APPEND qt_libs_list "${qt_loc}/${lib}${qt_lib_suffix}")
     endforeach()
@@ -167,12 +178,18 @@ elseif (APPLE)
         plugins/tls/${qt_lib_prefix}qsecuretransportbackend
         plugins/networkinformation/${qt_lib_prefix}qapplenetworkinformation
     )
-    list(APPEND qt_libs_list
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSecureTransportBackendPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QAppleNetworkInformationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_resources_1>
-    )
+    if (TARGET Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QSecureTransportBackendPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSecureTransportBackendPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QAppleNetworkInformationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QAppleNetworkInformationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_resources_1)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QCocoaIntegrationPlugin_resources_1>)
+    endif()
     foreach (lib ${qt_libs})
         list(APPEND qt_libs_list "${qt_loc}/${lib}${qt_lib_suffix}")
     endforeach()
@@ -197,15 +214,29 @@ else()
         lib/${qt_lib_prefix}Qt${QT_VERSION_MAJOR}XcbQpa
         ${common_qt_libs}
     )
-    list(APPEND qt_libs_list
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbEglIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbGlxIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglPlatformIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandXdgShellIntegrationPlugin_init>
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandAdwaitaDecorationPlugin_init>
+    if (TARGET Qt${QT_VERSION_MAJOR}::QXcbIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QXcbEglIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbEglIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QXcbGlxIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QXcbGlxIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandEglPlatformIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglPlatformIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandEglClientBufferPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandXdgShellIntegrationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandXdgShellIntegrationPlugin_init>)
+    endif()
+    if (TARGET Qt${QT_VERSION_MAJOR}::QWaylandAdwaitaDecorationPlugin_init)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandAdwaitaDecorationPlugin_init>)
         $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QWaylandBradientDecorationPlugin_init>
         $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QComposePlatformInputContextPlugin_init>
         $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QSvgIconPlugin_init>
