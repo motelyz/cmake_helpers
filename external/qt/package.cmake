@@ -57,7 +57,7 @@ if (NOT DESKTOP_APP_USE_PACKAGED)
     list(APPEND CMAKE_PREFIX_PATH ${qt_loc} ${libs_loc}/local)
 endif()
 
-find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
+find_package(QT NAMES Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 if (NOT LINUX AND NOT DESKTOP_APP_USE_PACKAGED AND NOT qt_requested EQUAL QT_VERSION)
     message(FATAL_ERROR "Configured Qt version ${QT_VERSION} does not match requested version ${qt_requested}. Please reconfigure.")
