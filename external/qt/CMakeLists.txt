@@ -51,7 +51,7 @@ INTERFACE
     ${qt_loc}/include/QtGui
     ${qt_loc}/include/QtOpenGL
     ${qt_loc}/include/QtWidgets
-    ${qt_loc}/include/QtOpenGLWidgets
+    $<$<TARGET_EXISTS:Qt::OpenGLWidgets>:${qt_loc}/include/QtOpenGLWidgets>
     ${qt_loc}/include/QtSvg
     $<$<TARGET_EXISTS:Qt::DBus>:${qt_loc}/include/QtDBus>
     $<$<TARGET_EXISTS:Qt::Quick>:${qt_loc}/include/QtQuick>
@@ -72,7 +72,7 @@ INTERFACE
     QT_GUI_LIB
     QT_OPENGL_LIB
     QT_WIDGETS_LIB
-    QT_OPENGLWIDGETS_LIB
+    $<$<TARGET_EXISTS:Qt::OpenGLWidgets>:QT_OPENGLWIDGETS_LIB>
     QT_NETWORK_LIB
     QT_SVG_LIB
     $<$<TARGET_EXISTS:Qt::DBus>:QT_DBUS_LIB>
@@ -290,18 +290,26 @@ else()
     endforeach()
 endif()
 
-list(APPEND qt_libs_list
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Gui_resources_1>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Gui_resources_2>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_1>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_2>
-    $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_3>
-)
+if (TARGET Qt${QT_VERSION_MAJOR}::Gui_resources_1)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Gui_resources_1>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::Gui_resources_2)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Gui_resources_2>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::Widgets_resources_1)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_1>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::Widgets_resources_2)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_2>)
+endif()
+if (TARGET Qt${QT_VERSION_MAJOR}::Widgets_resources_3)
+    list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Widgets_resources_3>)
+endif()
 
 if (TARGET Qt::Quick)
-    list(APPEND qt_libs_list
-        $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Quick_resources_2>
-    )
+    if (TARGET Qt${QT_VERSION_MAJOR}::Quick_resources_2)
+        list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::Quick_resources_2>)
+    endif()
 endif()
 
 target_link_libraries(external_qt
