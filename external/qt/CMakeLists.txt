@@ -256,7 +256,6 @@ else()
     if (TARGET Qt${QT_VERSION_MAJOR}::QGlibNetworkInformationPlugin_init)
         list(APPEND qt_libs_list $<TARGET_OBJECTS:Qt${QT_VERSION_MAJOR}::QGlibNetworkInformationPlugin_init>)
     endif()
-    )
     if (TARGET Qt::DBus)
         list(PREPEND qt_libs
             plugins/platforminputcontexts/${qt_lib_prefix}ibusplatforminputcontextplugin
